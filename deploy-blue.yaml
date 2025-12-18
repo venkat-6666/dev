@@ -23,28 +23,11 @@ kind: Service
 metadata:
   name: deploy-ingress-blue
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: blue-app
   ports:
     - port: 80
       targetPort: 80
       protocol: TCP
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: ingress-blue
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
-spec:
-  rules:
-    - http:
-        paths:
-          - path: /blue/?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: deploy-ingress-blue
-                port:
-                  number: 80
+
